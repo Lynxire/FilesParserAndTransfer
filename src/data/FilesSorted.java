@@ -12,10 +12,21 @@ public class FilesSorted {
 
     public static void sorted() throws IOException {
         String path = "C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\source_files\\";
-        for (int i = 0; i < FilesReader.filesRead(path).size(); i++) {
-            String[] strings = FilesReader.filesRead(path).get(i).split(" ");
-            Path file = Files.createFile(Path.of("C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\sorted_files\\" + i + ".txt"));
-            Files.writeString(file, strings[0] + " " + strings[1] + " " + strings[2] + " " + strings[3] + " " + strings[4]);
+        List<String> stringList = FilesReader.filesRead(path);
+        try {
+            if(stringList.isEmpty()){
+                throw new RuntimeException("Нету исходных файлов");
+            }
+
+            for (int i = 0; i < stringList.size(); i++) {
+                String[] strings = stringList.get(i).split(" ");
+                Path file = Files.createFile(Path.of("C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\sorted_files\\" + i + ".txt"));
+                Files.writeString(file, strings[0] + " " + strings[1] + " " + strings[2] + " " + strings[3] + " " + strings[4]);
+            }
         }
+        catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }
