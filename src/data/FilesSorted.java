@@ -18,6 +18,7 @@ public class FilesSorted {
                 throw new RuntimeException("Нету исходных файлов");
             }
 
+            DirectoryCleaner.clearDirectory("C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\sorted_files", "отсортированных файлов");
             for (int i = 0; i < stringList.size(); i++) {
                 String[] strings = stringList.get(i).split(" ");
                 Path file = Files.createFile(Path.of("C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\sorted_files\\" + i + ".txt"));

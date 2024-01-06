@@ -1,5 +1,6 @@
 package model;
 
+import data.DirectoryCleaner;
 import data.FilesReader;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class TransferMoney {
             if(filesRead.isEmpty()){
                 throw new RuntimeException("Нету отсортированных файлов");
             }
-
+            DirectoryCleaner.clearDirectory("C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\result", "результатов");
             for (int i = 0; i < filesRead.size(); i++) {
                 String[] strings = filesRead.get(i).split(" ");
                 try {
