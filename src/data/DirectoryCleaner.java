@@ -10,7 +10,6 @@ import java.util.List;
 public class DirectoryCleaner {
 
     public static void clearDirectory(String path, String name) throws IOException {
-
         List<Boolean> list = Files.walk(Path.of(path))
                 .filter(Files::isRegularFile)
                 .map(Path::toFile)
@@ -18,7 +17,7 @@ public class DirectoryCleaner {
                 .toList();
             if (!list.isEmpty()) {
                 System.out.println("директория " + name + " очищена");
-
+                ListLog.arrayList.add("директория " + name + " очищена");
             }
 
 

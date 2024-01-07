@@ -19,7 +19,7 @@ public class FilesReader {
                     }
                 })
                 .toList();
-
+        ListLog.arrayList.add("Прочитаны файлы");
         return stringList;
     }
 }
