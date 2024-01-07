@@ -16,7 +16,7 @@ public class UserUI {
             System.out.println("Выберите пункт:");
             System.out.println("1. Отсортировать файлы");
             System.out.println("2. Перевести деньги");
-            System.out.println("3. Показать все выполненые операции");
+            System.out.println("3. Показать все выполненные операции");
             System.out.println("4. Выход");
             number = scanner.nextInt();
             switch (number) {
