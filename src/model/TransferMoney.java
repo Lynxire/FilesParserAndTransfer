@@ -2,6 +2,8 @@ package model;
 
 import data.DirectoryCleaner;
 import data.FilesReader;
+import exception.FaildCount;
+import exception.ReadFileNull;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,14 +19,14 @@ public class TransferMoney {
         List<String> filesRead = FilesReader.filesRead(pathSortedFiles);
         try {
             if(filesRead.isEmpty()){
-                throw new RuntimeException("Нету отсортированных файлов");
+                throw new ReadFileNull("Нету отсортированных файлов");
             }
             DirectoryCleaner.clearDirectory("C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\result", "результатов");
             for (int i = 0; i < filesRead.size(); i++) {
                 String[] strings = filesRead.get(i).split(" ");
                 try {
                     if(Integer.parseInt(strings[1]) < Integer.parseInt(strings[4])){
-                        throw new RuntimeException("На счете недостаточно денег для перевода");
+                        throw new FaildCount("На счете недостаточно денег для перевода");
                     }
 //              if(strings[0].matches("") && strings[2].matches(""))
 //                {
@@ -34,14 +36,14 @@ public class TransferMoney {
                     int i2 = Integer.parseInt(strings[3]) + Integer.parseInt(strings[4]);
                     Path file = Files.createFile(Path.of("C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\result\\" + "files_" + i + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "-good.txt"));
                     Files.writeString(file,strings[0] + " " + i1 + " " + strings[2] + " " + i2 + " " + strings[4]);
-                }catch (RuntimeException e){
+                }catch (FaildCount e){
                     Path file = Files.createFile(Path.of("C:\\Users\\fined\\IdeaProjects\\FilesParserAndTransfer\\src\\files\\result\\" + "files_" + i + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "-bad.txt"));
                     Files.writeString(file,e.getMessage().toString());
                 }
 
             }
         }
-        catch (RuntimeException e){
+        catch (ReadFileNull e){
             System.out.println(e.getMessage());
         }
 
