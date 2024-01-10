@@ -15,7 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TransferMoney {
-    public static String pathSortedFiles = ".\\src\\files\\sorted_files\\";
+    private static final String pathSortedFiles = ".\\src\\files\\sorted_files\\";
+    private static final String pathResult = ".\\src\\files\\result\\";
 
     public static void transferMoney() throws IOException {
         List<String> filesRead = FilesReader.filesRead(pathSortedFiles);
@@ -23,8 +24,9 @@ public class TransferMoney {
             if (filesRead.isEmpty()) {
                 throw new ReadFileNull("Нету отсортированных файлов");
             }
-            DirectoryCleaner.clearDirectory(".\\src\\files\\result", "результатов");
+            DirectoryCleaner.clearDirectory(pathResult, "результатов");
             for (int i = 0; i < filesRead.size(); i++) {
+                int j = i+1;
                 String[] strings = filesRead.get(i).split(" ");
                 try {
                     if (Integer.parseInt(strings[1]) < Integer.parseInt(strings[4])) {
@@ -35,16 +37,16 @@ public class TransferMoney {
                     }
                     int i1 = Integer.parseInt(strings[1]) - Integer.parseInt(strings[4]);
                     int i2 = Integer.parseInt(strings[3]) + Integer.parseInt(strings[4]);
-                    Path file = Files.createFile(Path.of(".\\src\\files\\result\\" + "files_" + i + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "-good.txt"));
+                    Path file = Files.createFile(Path.of(pathResult + "files_" + j + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "-good.txt"));
                     Files.writeString(file, strings[0] + " " + i1 + " " + strings[2] + " " + i2 + " " + strings[4]);
-                    System.out.println("Перевод выполнен для файла - " + i);
-                    ListLog.arrayList.add("Перевод выполнен для файла - " + i);
+                    System.out.println("Перевод выполнен для файла - " + j);
+                    ListLog.arrayList.add("Перевод выполнен для файла - " + j);
 
                 } catch (FaildCount | FaildFormatNumber e) {
-                    Path file = Files.createFile(Path.of(".\\src\\files\\result\\" + "files_" + i + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "-bad.txt"));
+                    Path file = Files.createFile(Path.of(pathResult + "files_" + j + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "-bad.txt"));
                     Files.writeString(file, e.getMessage().toString());
-                    System.out.println("Перевод не выполнен для файла - " + i + " Причина - " + e.getMessage());
-                    ListLog.arrayList.add("Перевод не выполнен для файла - " + i + " Причина - " + e.getMessage());
+                    System.out.println("Перевод не выполнен для файла - " + j + " Причина - " + e.getMessage());
+                    ListLog.arrayList.add("Перевод не выполнен для файла - " + j + " Причина - " + e.getMessage());
                 }
 
             }
