@@ -1,13 +1,11 @@
 package data;
 
-import exception.FaildCount;
+import exception.FailCount;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class FilesSorted {
 
@@ -20,7 +18,7 @@ public class FilesSorted {
         try {
             DirectoryCleaner.clearDirectory(pathSorted, "отсортированных файлов");
             if(stringList.isEmpty()){
-                throw new FaildCount("Нету исходных файлов");
+                throw new FailCount("Нету исходных файлов");
             }
 
             for (int i = 0; i < stringList.size(); i++) {
@@ -32,7 +30,7 @@ public class FilesSorted {
                 ListLog.arrayList.add("Файл - " + j +" отсортирован");
             }
         }
-        catch (FaildCount e){
+        catch (FailCount e){
             System.out.println(e.getMessage());
             ListLog.arrayList.add(e.getMessage());
         }

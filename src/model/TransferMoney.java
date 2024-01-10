@@ -3,8 +3,8 @@ package model;
 import data.DirectoryCleaner;
 import data.FilesReader;
 import data.ListLog;
-import exception.FaildCount;
-import exception.FaildFormatNumber;
+import exception.FailCount;
+import exception.FailFormatNumber;
 import exception.ReadFileNull;
 
 import java.io.IOException;
@@ -30,10 +30,10 @@ public class TransferMoney {
                 String[] strings = filesRead.get(i).split(" ");
                 try {
                     if (Integer.parseInt(strings[1]) < Integer.parseInt(strings[4])) {
-                        throw new FaildCount("На счете недостаточно денег для перевода");
+                        throw new FailCount("На счете недостаточно денег для перевода");
                     }
                     if (!strings[0].matches("\\d{5}-\\d{5}") || !strings[2].matches("\\d{5}-\\d{5}")) {
-                        throw new FaildFormatNumber("Некорректный формат счета");
+                        throw new FailFormatNumber("Некорректный формат счета");
                     }
                     int i1 = Integer.parseInt(strings[1]) - Integer.parseInt(strings[4]);
                     int i2 = Integer.parseInt(strings[3]) + Integer.parseInt(strings[4]);
@@ -42,7 +42,7 @@ public class TransferMoney {
                     System.out.println("Перевод выполнен для файла - " + j);
                     ListLog.arrayList.add("Перевод выполнен для файла - " + j);
 
-                } catch (FaildCount | FaildFormatNumber e) {
+                } catch (FailCount | FailFormatNumber e) {
                     Path file = Files.createFile(Path.of(pathResult + "files_" + j + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "-bad.txt"));
                     Files.writeString(file, e.getMessage().toString());
                     System.out.println("Перевод не выполнен для файла - " + j + " Причина - " + e.getMessage());
